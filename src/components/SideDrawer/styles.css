@@ -1,0 +1,9 @@
+.sideBarList{
+    background-color: var(--primaryColor) !important;
+    height: 100%;
+
+}
+.sideBarList .icon {
+    color:var(--lightText);
+    align-self: center;
+}

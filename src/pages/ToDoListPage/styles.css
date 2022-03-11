@@ -1,0 +1,50 @@
+
+.toDoListPage .header{
+    margin-top: 1.5%;
+    margin-bottom: 1%;
+}
+.highPeriority{
+    color: red;
+}
+
+.mediumPeriority{
+    color:orange
+}
+.lowMedium{
+    color: gray;
+}
+.highPeriority::first-letter {
+    text-transform:capitalize;
+}
+.mediumPeriority::first-letter {
+    text-transform:capitalize;
+}
+.lowMedium::first-letter {
+    text-transform:capitalize;
+}
+
+.statusText{
+    color: #FFF;
+    font-weight: 700;
+    font-size: 11px !important;
+    margin: 4px;
+}
+.toDoStatus{
+    background-color: #92969b;
+    border-radius: 5px;
+}
+.inProgressStatus{
+    background-color: #22c7e8;
+    border-radius: 5px;
+}
+.doneStatus{
+    background-color: #2ac769;
+    border-radius: 5px;
+}
+
+
+.addForm{
+    border-color: #22c7e8;
+    border-width: 5px !important;
+    /* background-color: #22c7e8; */
+}
