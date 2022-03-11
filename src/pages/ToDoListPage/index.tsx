@@ -1,14 +1,19 @@
 import React from 'react'
 import SideDrawer from '../../components/SideDrawer'
-import { Grid, Typography ,TextField } from '@mui/material';
+import { Grid, Typography  } from '@mui/material';
 import './styles.css';
 import DataTable from 'react-data-table-component';
-import {tableData ,tableColumns} from  '../../constants/Dummy';
-import { DefaultInput } from '../../components/inputs';
+import { tableColumns} from  '../../constants/Dummy';
+
 import { AddTaskForm } from '../../components/forms';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 
 const ToDoListPage = () => {
+  const tasks = useSelector(
+    (state: RootState) => state.tasksReducer.tasks
+  );
   return (
     <Grid xs={12} container direction='row' className='toDoListPage' justifyContent='center'>
 
@@ -27,7 +32,7 @@ const ToDoListPage = () => {
           <DataTable
             title="Tasks"
             columns={tableColumns}
-            data={tableData}
+            data={tasks}
             pagination
             selectableRows
           />

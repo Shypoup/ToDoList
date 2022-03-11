@@ -13,15 +13,19 @@ import { TextField } from '@mui/material';
 
  }
  const DefaultInput =(props:DefaultInputInterface)=> {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    props.onChange(event.target.value);
+  };
+
   return (
    
   <TextField
           id="standard-multiline-flexible"
           label={props.label}
           multiline={props.multiline? true:false}
-          maxRows={4}
+          // maxRows={4}
           value={props.value}
-          onChange={()=>props.onChange()}
+          onChange={handleChange}
           variant="standard"
         />
 

@@ -100,13 +100,13 @@ export const tableColumns = [
       selector: (row: any) => {
         let className;
         switch (row.status) {
-          case 'to-do':
+          case 'To-Do':
             className='toDoStatus'
             break;
-            case 'in progress':
+            case 'In Progress':
             className='inProgressStatus'
             break;
-          case 'done':
+          case 'Done':
             className='doneStatus'
           break;
           default:
@@ -156,7 +156,7 @@ export const tableColumns = [
 
   
   export const statusOptions =[
-    {value:'toDo', label:'To-Do'},
-    {value:'inProgress', label:'In Progress'},
-    {value:'done', label:'Done'},
+    {value:'To-Do', label:'To-Do'},
+    {value:'In Progress', label:'In Progress'},
+    {value:'Done', label:'Done'},
   ]
