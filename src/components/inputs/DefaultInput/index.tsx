@@ -27,6 +27,7 @@ import { TextField } from '@mui/material';
           value={props.value}
           onChange={handleChange}
           variant="standard"
+          className='inputStyles'
         />
 
   );

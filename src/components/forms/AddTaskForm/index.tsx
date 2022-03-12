@@ -1,11 +1,17 @@
 import React, { useState } from 'react'
 import { DefaultDatePicker, DefaultInput, DefaultSelect } from '../../inputs'
-import {Grid ,Button} from '@mui/material';
+import {Grid ,Button ,Typography ,Fab} from '@mui/material';
 import { assigneesOptions, perorityOptions, statusOptions } from '../../../constants/Dummy';
 import { useDispatch } from 'react-redux';
 import { addNewTaskAction } from '../../../redux/actions/tasksAction';
 import moment from 'moment';
-const AddTaskForm = () => {
+import './styles.css';
+import CloseIcon from '@mui/icons-material/Close';
+
+interface  AddTaskFormInterface{
+  setShowAddForm:Function
+}
+const AddTaskForm = (props:AddTaskFormInterface) => {
   const dispatch=useDispatch();
   const [title,setTitle]=useState('');
   const [description,setDescription]=useState('');
@@ -37,7 +43,17 @@ const AddTaskForm = () => {
   }
 
   return (
-    <Grid container xs={10}  direction={'column'}>
+    <Grid container xs={10}  direction={'row'} className='addTaskForm'>
+
+      {/* header */}
+      <Grid container xs={12} alignItems='center' justifyContent='space-between' >
+              <Typography variant="h5" component="h5" className='header'>Add new task</Typography>
+              <Fab color="inherit" aria-label="add" size='small' className='addButton' onClick={() => props.setShowAddForm(false)}>
+                <CloseIcon color="inherit" className='closeIcon' />
+              </Fab>
+            </Grid>
+
+            <Grid container xs={12}  direction='column'>
       {/* title */}
         <DefaultInput
           label="Title"
@@ -99,7 +115,8 @@ const AddTaskForm = () => {
       <br/>
 
       {/* Button */}
-      <Button variant="contained" onClick={()=> addTask()}>Add Task</Button>
+      <Button variant="contained" className="confirmButton" onClick={()=> addTask()}>Add Task</Button>
+      </Grid>
     </Grid>
   )
 }

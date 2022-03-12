@@ -1,0 +1,11 @@
+.addTaskForm {
+    color: var(--primaryColor);
+
+}
+.addTaskForm .closeIcon{
+    color:var(--lightText)
+}
+
+.addTaskForm .confirmButton{
+    background-color: var(--primaryColor);
+}

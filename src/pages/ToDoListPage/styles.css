@@ -1,4 +1,6 @@
-
+.toDoListPage{
+    background-color:var(--secondBackground);
+}
 .toDoListPage .header{
     margin-top: 1.5%;
     margin-bottom: 1%;
@@ -44,7 +46,26 @@
 
 
 .addForm{
-    border-color: #22c7e8;
-    border-width: 5px !important;
-    /* background-color: #22c7e8; */
+    border-color: var(--primaryColor);
+    border-width: 1px !important;
+    border-style: solid;
+    background-color: var(--primaryBackground);
+    border-radius: 0px 0px 0 25px;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    
 }
+
+.toDoListPage .addButton ,.toDoListPage  .addButton:hover{
+    background-color: var(--primaryColor) ;
+   
+   
+}
+.toDoListPage .addIcon{
+    color: var(--lightText);
+}
+
+.toDoListPage .tableContainer{
+    margin-top: 3%;
+}
+

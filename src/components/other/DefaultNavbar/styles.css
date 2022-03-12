@@ -1,0 +1,7 @@
+.defaultNavbar{
+    background-color: var(--primaryColor) !important;
+
+}
+.defaultNavbar .header , .defaultNavbar .icon{
+    color:var(--lightText)
+}
