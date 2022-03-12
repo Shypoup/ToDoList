@@ -1,25 +1,126 @@
 import React, { useState } from 'react';
-import { Grid, Typography ,Fab, useMediaQuery, useTheme  } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
+import { Grid, Typography ,Fab, useMediaQuery, useTheme ,IconButton } from '@mui/material';
 import './styles.css';
 import DataTable from 'react-data-table-component';
-import { tableColumns } from '../../constants/Dummy';
+
 
 import { AddTaskForm } from '../../components/forms';
-import { useSelector } from 'react-redux';
+import { useSelector ,useDispatch } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { DefaultNavbar } from '../../components/other';
-
+import {Delete as DeleteIcon , Add as AddIcon , Edit as EditIcon} from '@mui/icons-material';
+import { deleteTaskAction } from '../../redux/actions/tasksAction';
 
 const ToDoListPage = () => {
   const tasks = useSelector(
     (state: RootState) => state.tasksReducer.tasks
   );
+  console.log(tasks)
+  const dispatch=useDispatch();
   const [showAddForm, setShowAddForm] = useState(false);
   const theme=useTheme()
   const tablet = useMediaQuery(theme.breakpoints.down('md'));
   const mobile= useMediaQuery(theme.breakpoints.down('sm'));
   const isMatch = mobile ||tablet;
+
+  
+ const tableColumns = [
+  {
+    name: 'Title',
+    selector: (row: any) => row.title,
+    sortable: true,
+  },
+  {
+    name: 'Description',
+    selector: (row: any) => row.description,
+  },
+  {
+    name: 'Periority',
+    selector: (row: any) => {
+      let className;
+      switch (row.periority) {
+        case 'high':
+          className='highPeriority'
+          break;
+          case 'medium':
+          className='mediumPeriority'
+          break;
+        case 'low':
+          className='lowMedium'
+        break;
+        default:
+          className='lowMedium'
+          break;
+      }
+      return(<p className={className}>{row.periority}</p>)
+      },
+    sortable: true,
+  },
+  {
+    name: 'Status',
+    selector: (row: any) => {
+      let className;
+      switch (row.status) {
+        case 'To-Do':
+          className='toDoStatus'
+          break;
+          case 'In Progress':
+          className='inProgressStatus'
+          break;
+        case 'Done':
+          className='doneStatus'
+        break;
+        default:
+          className='toDoStatus'
+          break;
+      }
+      return(
+        <div className={className}>
+      <p className="statusText">{row.status.toUpperCase()}</p>
+      </div>
+      )},
+    sortable: true,
+  },
+  {
+    name: 'Deadline',
+    selector: (row: any) => row.deadline,
+    sortable: true,
+  },
+  {
+    name: 'Start date',
+    selector: (row: any) => row.startDate,
+    sortable: true,
+  },
+  {
+    name: 'assignee',
+    selector: (row: any) => row.assignee,
+    sortable: true,
+  },
+ 
+  {
+    name: 'assignee',
+    selector: (row: any) => row.assignee,
+    sortable: true,
+  },
+  {
+    name: '',
+    selector: (row: any) => (
+      <Grid container direction='row' xs={12}>
+      <IconButton aria-label="edit"  color="info" >
+        <EditIcon />
+      </IconButton>
+      <IconButton aria-label="delete"  color="error" onClick={()=>deleteTask(row.id)}>
+        <DeleteIcon />
+      </IconButton>
+      </Grid>
+    ),
+    sortable: false,
+  },
+];
+
+const deleteTask =(id:any)=>{
+    dispatch(deleteTaskAction(id));
+}
   return (
     <Grid xs={12} container direction='column' className='toDoListPage' justifyContent='center' >
       <DefaultNavbar />
@@ -45,7 +146,7 @@ const ToDoListPage = () => {
               columns={tableColumns}
               data={tasks}
               pagination
-              selectableRows
+              
             />
           </Grid>
         </Grid>
