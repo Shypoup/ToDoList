@@ -1,15 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DefaultDatePicker, DefaultInput, DefaultSelect } from '../../inputs'
 import {Grid ,Button ,Typography ,Fab} from '@mui/material';
 import { assigneesOptions, perorityOptions, statusOptions } from '../../../constants/Dummy';
 import { useDispatch } from 'react-redux';
-import { addNewTaskAction } from '../../../redux/actions/tasksAction';
+import { addNewTaskAction, editTaskAction } from '../../../redux/actions/tasksAction';
 import moment from 'moment';
 import './styles.css';
 import CloseIcon from '@mui/icons-material/Close';
 
 interface  AddTaskFormInterface{
-  setShowAddForm:Function
+  setShowAddForm:Function, 
+  selectedTask?:any
 }
 const AddTaskForm = (props:AddTaskFormInterface) => {
   const dispatch=useDispatch();
@@ -21,14 +22,42 @@ const AddTaskForm = (props:AddTaskFormInterface) => {
   const [status,setStatus]=useState('');
   const [periority,setPeriority]=useState('');
 
-
+  useEffect(()=>{
+    if(props.selectedTask){
+      setTitle(props.selectedTask.title)
+      setDescription(props.selectedTask.description)
+      setStartDate(props.selectedTask.startDate)
+      setDeadline(props.selectedTask.deadline)
+      setAssignee(props.selectedTask.assignee)
+      setPeriority(props.selectedTask.periority)
+      setStatus(props.selectedTask.status)
+    }
+  },[props.selectedTask])
   const addTask =()=>{
-    if(title ==='' || description === '' ||startDate ===null ||deadline===null || assignee ==='' || status==='' || periority ===''){
+    if(_checkEmpty()){
       alert('please fill all inputs')
     }else{
       let task ={id:Math.random(),title,description,startDate:moment(startDate).format('LL'),deadline: moment(deadline).format('LL'),assignee,status,periority}
       dispatch(addNewTaskAction(task));
       _clearFields()
+    }
+  }
+
+  const editTask =()=>{
+    if(_checkEmpty()){
+      alert('please fill all inputs')
+    }else{
+      let task ={id:props.selectedTask.id,title,description,startDate:moment(startDate).format('LL'),deadline: moment(deadline).format('LL'),assignee,status,periority}
+      dispatch(editTaskAction(task));
+      _clearFields()
+    }
+  }
+
+  const _checkEmpty=()=>{
+    if(title ==='' || description === '' ||startDate ===null ||deadline===null || assignee ==='' || status==='' || periority ===''){
+      return true
+    }else{
+      return false;
     }
   }
 
@@ -47,7 +76,7 @@ const AddTaskForm = (props:AddTaskFormInterface) => {
 
       {/* header */}
       <Grid container xs={12} alignItems='center' justifyContent='space-between' >
-              <Typography variant="h5" component="h5" className='header'>Add new task</Typography>
+              <Typography variant="h5" component="h5" className='header'>{props.selectedTask? 'Edit': 'Add new'} task</Typography>
               <Fab color="inherit" aria-label="add" size='small' className='addButton' onClick={() => props.setShowAddForm(false)}>
                 <CloseIcon color="inherit" className='closeIcon' />
               </Fab>
@@ -115,7 +144,11 @@ const AddTaskForm = (props:AddTaskFormInterface) => {
       <br/>
 
       {/* Button */}
+      {props.selectedTask ?
+      <Button variant="contained" className="confirmButton" onClick={()=> editTask()}>Edit Task</Button>
+      :
       <Button variant="contained" className="confirmButton" onClick={()=> addTask()}>Add Task</Button>
+}
       </Grid>
     </Grid>
   )

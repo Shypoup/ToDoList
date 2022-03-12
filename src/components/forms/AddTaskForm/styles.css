@@ -6,6 +6,6 @@
     color:var(--lightText)
 }
 
-.addTaskForm .confirmButton{
+.addTaskForm .confirmButton , .addTaskForm .confirmButton:hover{
     background-color: var(--primaryColor);
 }
