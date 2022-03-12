@@ -38,9 +38,7 @@ const DefaultSelect =(props:DefaultSelectInterface)=> {
           onChange={handleChange}
           label={props.label}
         >
-          <MenuItem value="" >
-            <em>None</em>
-          </MenuItem>
+          
          {slectOptions()}
         </Select>
       </FormControl>

@@ -10,7 +10,7 @@ import { RootState } from '../../redux/store';
 import { DefaultNavbar } from '../../components/other';
 import {Delete as DeleteIcon , Add as AddIcon , Edit as EditIcon} from '@mui/icons-material';
 import { deleteTaskAction } from '../../redux/actions/tasksAction';
-
+import toast from 'react-hot-toast';
 const ToDoListPage = () => {
   const tasks = useSelector(
     (state: RootState) => state.tasksReducer.tasks
@@ -37,7 +37,8 @@ const ToDoListPage = () => {
   },
   {
     name: 'Periority',
-    selector: (row: any) => {
+    selector:(row: any) => row.periority,
+    cell: (row: any) => {
       let className;
       switch (row.periority) {
         case 'high':
@@ -59,7 +60,8 @@ const ToDoListPage = () => {
   },
   {
     name: 'Status',
-    selector: (row: any) => {
+    selector:(row: any) => row.status,
+    cell: (row: any) => {
       let className;
       switch (row.status) {
         case 'To-Do':
@@ -115,6 +117,7 @@ const ToDoListPage = () => {
 
 const deleteTask =(id:any)=>{
     dispatch(deleteTaskAction(id));
+    toast.success('Successfully Task deleted');
 }
 
 const showAddTaskForm =()=>{

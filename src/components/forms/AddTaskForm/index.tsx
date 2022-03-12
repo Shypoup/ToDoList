@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { DefaultDatePicker, DefaultInput, DefaultSelect } from '../../inputs'
-import {Grid ,Button ,Typography ,Fab} from '@mui/material';
+import {Grid ,Button ,Typography ,Fab, useTheme, useMediaQuery} from '@mui/material';
 import { assigneesOptions, perorityOptions, statusOptions } from '../../../constants/Dummy';
 import { useDispatch } from 'react-redux';
 import { addNewTaskAction, editTaskAction } from '../../../redux/actions/tasksAction';
 import moment from 'moment';
 import './styles.css';
 import CloseIcon from '@mui/icons-material/Close';
-
+import toast from 'react-hot-toast';
 interface  AddTaskFormInterface{
   setShowAddForm:Function, 
   selectedTask?:any
@@ -21,6 +21,10 @@ const AddTaskForm = (props:AddTaskFormInterface) => {
   const [assignee,setAssignee]=useState('');
   const [status,setStatus]=useState('');
   const [periority,setPeriority]=useState('');
+  const theme=useTheme();
+  const tablet = useMediaQuery(theme.breakpoints.down('md'));
+  const mobile= useMediaQuery(theme.breakpoints.down('sm'));
+  const isMatch = mobile ||tablet;
 
   useEffect(()=>{
     if(props.selectedTask){
@@ -35,11 +39,15 @@ const AddTaskForm = (props:AddTaskFormInterface) => {
   },[props.selectedTask])
   const addTask =()=>{
     if(_checkEmpty()){
-      alert('please fill all inputs')
+      toast.error('please fill all inputs')
     }else{
       let task ={id:Math.random(),title,description,startDate:moment(startDate).format('LL'),deadline: moment(deadline).format('LL'),assignee,status,periority}
       dispatch(addNewTaskAction(task));
+      toast.success('Successfully new task created!');
       _clearFields()
+      if(isMatch){
+        props.setShowAddForm(false)
+        }
     }
   }
 
@@ -49,6 +57,10 @@ const AddTaskForm = (props:AddTaskFormInterface) => {
     }else{
       let task ={id:props.selectedTask.id,title,description,startDate:moment(startDate).format('LL'),deadline: moment(deadline).format('LL'),assignee,status,periority}
       dispatch(editTaskAction(task));
+      toast.success('Successfully task edited!');
+      if(isMatch){
+      props.setShowAddForm(false)
+      }
       _clearFields()
     }
   }
